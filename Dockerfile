@@ -41,7 +41,6 @@ RUN wget https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.1.1
     make && \
     make install      
 
-# pagedown 패키지를 위한 google-chrome 설치
 RUN curl -L http://bit.ly/google-chrome-stable -o google-chrome-stable.deb && \
     apt-get -y install ./google-chrome-stable.deb && \
     rm google-chrome-stable.deb
