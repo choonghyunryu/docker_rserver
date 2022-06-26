@@ -17,4 +17,5 @@
   - Rmecab
 6. google chrome
   - pagedown을 이용한 문서의 pdf 출력
-  
+7. 한글 폰트 설치
+  - 나눔 폰트 시리즈
