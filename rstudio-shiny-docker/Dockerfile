@@ -25,24 +25,14 @@ RUN apt-get install -y language-pack-ko && \
 RUN apt-get install -y fonts-nanum* && \
     fc-cache -fv
 
-# 은전한닙 형태소분석기 설치
-RUN wget https://bitbucket.org/eunjeon/mecab-ko/downloads/mecab-0.996-ko-0.9.2.tar.gz && \
-    tar xzvf mecab-0.996-ko-0.9.2.tar.gz && \
-    cd mecab-0.996-ko-0.9.2 && \   
-    ./configure && \
-    make && \
-    make install && \
-    ldconfig && \
-    cd
+# 설치할 파일을 저장할 디렉토리 생성 
+RUN mkdir /usr/local/install_resources
+COPY NIADic/*.csv /usr/local/install_resources/
 
-# 은전한닙 형태소분석기 사전 설치
-RUN wget https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.1.1-20180720.tar.gz && \
-    tar xvfz mecab-ko-dic-2.1.1-20180720.tar.gz && \
-    cd mecab-ko-dic-2.1.1-20180720 && \   
-    autoreconf && \ 
-    ./configure && \
-    make && \
-    make install      
+# 형태소분석기 설치
+COPY install_morphology.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/install_morphology.sh
+RUN /usr/local/bin/install_morphology.sh
 
 # google chrome 설치 for pagedown 
 RUN curl -L http://bit.ly/google-chrome-stable -o google-chrome-stable.deb && \
