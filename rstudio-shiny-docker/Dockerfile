@@ -1,5 +1,7 @@
 FROM rocker/rstudio:4.2.0
 
+MAINTAINER Choonghyun Ryu <"choonghyun.ryu@gmail.com">
+
 # shiny server 설치
 RUN /rocker_scripts/install_shiny_server.sh
 # tidyverse 패키지군 설치
@@ -15,7 +17,8 @@ RUN /rocker_scripts/install_quarto.sh
 # system libraries of general use
 RUN apt-get update && apt-get install -y \
     openjdk-11-jdk \
-    htop
+    htop \
+    readline-common
 
 # Install Korean language pack
 RUN apt-get install -y language-pack-ko && \
@@ -62,6 +65,11 @@ RUN chmod +x /usr/local/bin/install_apache2.sh
 RUN /usr/local/bin/install_apache2.sh
 
 EXPOSE 80
+
+# 추가 tex packages 설치
+COPY install_tex_packages.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/install_tex_packages.sh
+RUN /usr/local/bin/install_tex_packages.sh
 
 # server deamon 실행
 CMD ["/init"]
