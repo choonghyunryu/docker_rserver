@@ -11,4 +11,4 @@ R -e "tinytex::tlmgr_install(c('oberdiek', 'pgf', 'pgfplots', 'relsize', 'rsfs',
 R -e "tinytex::tlmgr_install(c('titlesec', 'titling', 'translator', 'trimspaces', 'ulem', 'upquote', 'wrapfig', 'xcolor', 'xifthen', 'xstring', 'xunicode'))"
 R -e "tinytex::tlmgr_install(c('epstopdf-pkg', 'paralist', 'placeins', 'sauerj', 'tufte-latex', 'hardwrap', 'catchfile', 'metalogo', 'xltxtra', 'realscripts'))"
 R -e "tinytex::tlmgr_install(c('ragged2e', 'textcase', 'units', 'mdwtools', 'morefloats', 'etex-pkg', 'multirow', 'sttools', 'dblfloatfix', 'soul', 'bookmark'))"
-R -e "tinytex::tlmgr_install(c('subfig', 'footmisc', 'varwidth', 'stix', 'eso-pic', 'algorithms', 'algorithmicx')"
+R -e "tinytex::tlmgr_install(c('subfig', 'footmisc', 'varwidth', 'stix', 'eso-pic', 'algorithms', 'algorithmicx'))"

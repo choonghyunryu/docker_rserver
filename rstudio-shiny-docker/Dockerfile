@@ -71,5 +71,8 @@ COPY install_tex_packages.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_tex_packages.sh
 RUN /usr/local/bin/install_tex_packages.sh
 
+# for tex install by ruser
+RUN chown -R ruser /usr/local/texlive/
+
 # server deamon 실행
 CMD ["/init"]
