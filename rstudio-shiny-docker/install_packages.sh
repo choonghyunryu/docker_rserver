@@ -28,6 +28,7 @@ R -e "install.packages('formattable',        lib = '/usr/local/lib/R/site-librar
 R -e "install.packages('DT',                 lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('XML',                lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('Cairo',              lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
+R -e "install.packages('ggridges',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 
 R -e "install.packages('RMeCab',             lib = '/usr/local/lib/R/site-library', repos = 'https://rmecab.jp/R', type = 'source')"
 
