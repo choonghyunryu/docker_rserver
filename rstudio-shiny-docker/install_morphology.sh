@@ -39,5 +39,4 @@ rm -rf $INSTALLD/mecab-ko-dic-2.1.1-20180720.tar.gz
 mv ${INSTALLD}/*.csv ${INSTALLD}/mecab-ko-dic-2.1.1-20180720/user-dic 
 cd ${INSTALLD}/mecab-ko-dic-2.1.1-20180720 
 ./tools/add-userdic.sh
-make
 make install

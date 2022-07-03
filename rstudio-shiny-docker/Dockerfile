@@ -44,18 +44,8 @@ RUN curl -L http://bit.ly/google-chrome-stable -o google-chrome-stable.deb && \
 
 COPY google-chrome /usr/local/bin/
 
-# Install R packages
-COPY install_packages.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/install_packages.sh
-RUN /usr/local/bin/install_packages.sh
-
 # Set R environment variables
 COPY Renviron /.Renviron
-
-# Create user for R analytics
-RUN adduser ruser && \
-    sh -c 'echo ruser:rworld | sudo chpasswd' && \
-    addgroup ruser staff
 
 # Install web server
 COPY install_apache2.sh /usr/local/bin/
@@ -67,18 +57,29 @@ COPY install_tex_packages.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_tex_packages.sh
 RUN /usr/local/bin/install_tex_packages.sh
 
-# For install tex packages by ruser account
-RUN chown -R ruser /usr/local/texlive/
+# Install R packages
+COPY install_packages.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/install_packages.sh
+RUN /usr/local/bin/install_packages.sh
 
 # Install dsub deamon
 COPY install_dsub_deamon.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_dsub_deamon.sh
 RUN /usr/local/bin/install_dsub_deamon.sh
 
+# Create user for R analytics
+COPY create_user.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/create_user.sh
+RUN /usr/local/bin/create_user.sh
+
 # For servers (rstudio, shiny, web)
 EXPOSE 8787 
 EXPOSE 3838 
 EXPOSE 80
+
+# For Environments
+ENV LANG en_US.UTF-8
+ENV TZ Asia/Seoul
 
 # Excute server deamons
 CMD ["/init"]
