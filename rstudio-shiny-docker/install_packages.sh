@@ -4,7 +4,7 @@ set -e
 
 R -e "install.packages('markdown',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('dlookr',             lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('alookr',             lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
+R -e "install.packages('pagedown',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('shinyjs',            lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('shinydashboard',     lib = '/usr/local/lib/R/site-library', epos = 'http://cran.rstudio.com/')"
 R -e "install.packages('shinydashboardPlus', lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
