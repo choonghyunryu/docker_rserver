@@ -35,6 +35,7 @@ R -e "install.packages('tau',                lib = '/usr/local/lib/R/site-librar
 R -e "install.packages('Sejong',             lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('tidytext',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('wordcloud2',         lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
+R -e "install.packages('openxlsx',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 
 R -e "install.packages('RMeCab',  lib = '/usr/local/lib/R/site-library', repos = 'https://rmecab.jp/R', type = 'source')"
 R -e "install.packages('KoNLP',   lib = '/usr/local/lib/R/site-library', repos = 'https://forkonlp.r-universe.dev', dependencies = TRUE, INSTALL_opts = c('--no-multiarch'))"
@@ -43,3 +44,4 @@ R -e "remotes::install_github('haven-jeon/NIADic/NIADic', lib = '/usr/local/lib/
 R -e "remotes::install_github('dreamRs/shinytreeview',    lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('choonghyunryu/koscrap',    lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('bit2r/bitTA',              lib = '/usr/local/lib/R/site-library')"
+R -e "remotes::install_github('bit2r/BitStat',            lib = '/usr/local/lib/R/site-library')"
