@@ -38,7 +38,7 @@ client_id <- ""
 client_secret <- ""
 
 if (getOption("api.key.file")) {
-  if (grepl("scrap_app", getwd()) && file.exists(".api_key.info")) {
+  if (grepl("scrap_news", getwd()) && file.exists(".api_key.info")) {
     client_info <- scan(file = ".api_key.info", what = "character")
 
     client_info <- get_api_key(client_info)
