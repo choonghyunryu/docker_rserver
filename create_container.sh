@@ -7,4 +7,4 @@ docker run -d -p 3838:3838 -p 8787:8787 -p 80:80 \
   -v `pwd`/shiny-server/app:/srv/shiny-server/ \
   -v `pwd`/web-server/html/:/var/www/html/ \
   -v `pwd`/shiny-server/log:/var/log/shiny-server/ \
-  rserver:first 
+  rserver:first
