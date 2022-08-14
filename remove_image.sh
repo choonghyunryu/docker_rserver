@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # remove docker image
-docker rmi -f rserver:second
+docker rmi -f rserver:first

@@ -13,8 +13,8 @@
     - tex
     - Quarto
 5. 한글 NLP
-    - 은접한닢 형태소분석기
-    - Rmecab
+    - bitTA 패키지
+    - 은전한닢 형태소분석기
 6. google chrome
     - pagedown을 이용한 문서의 pdf 출력
 7. 한글 폰트 설치
@@ -36,7 +36,7 @@ create_image.sh의 내용은 다음과 같음
 #!/bin/bash
 
 # create docker image
-docker build -t rserver:second ./rstudio-shiny-docker
+docker build -t rserver:first ./rstudio-shiny-docker
 
 ````
 
@@ -61,7 +61,7 @@ docker run -d -p 3838:3838 -p 8787:8787 -p 80:80 \
   -v /Users/choonghyunryu/Documents/01_Personal/15_demos/shiny-server/:/srv/shiny-server/ \
   -v /Users/choonghyunryu/Documents/01_Personal/15_demos/web/html/:/var/www/html/ \
   -v /Users/choonghyunryu/Documents/01_Personal/15_demos/logs/shiny/:/var/log/shiny-server/ \
-  rserver:second 
+  rserver:first 
 ````
 
 1. Web server의 웹 어플리케이션의 경로로 로컬 머신의 
