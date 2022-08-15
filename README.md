@@ -111,8 +111,8 @@ $ create_container.sh
 ### RStudio 서버 접속하기
 RStudio 서버에 접속하기 위한 URL은 다음과 같습니다.
 
-- [http://localhost:8787/](http://localhost:8787/){target=_blank} 혹은,
-- [http://127.0.0.1:8787/](http://127.0.0.1:8787/){target=_blank} 
+- [http://localhost:8787/](http://localhost:8787/) 혹은,
+- [http://127.0.0.1:8787/](http://127.0.0.1:8787/)
 
 해당 URL로 접속하면 다음처럼 사용자의 아이디와 패스워드를 묻는 다이얼로그가 나타납니다.
 
@@ -136,6 +136,6 @@ shiny-server/app/scrap_news/ui.R
 
 이 앱에 접속하기 위해서는 다음의 URL을 이용합니다.
 
-- [http://localhost:3838/scrap_news](http://localhost:3838/scrap_news){target=_blank} 
+- [http://localhost:3838/scrap_news](http://localhost:3838/scrap_news)
 
 이 앱은 네이버 Open API를 이용해서 뉴스를 스크랩합니다. 그래서 Open API의 ID와 Secret을 입력해야 합니다. 이 정보는 개인 정보이므로, 여러분이 네이버로부터 Open API ID와 Secret를 발급받아야 합니다.
