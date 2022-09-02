@@ -48,5 +48,6 @@ R -e "remotes::install_github('haven-jeon/NIADic/NIADic', lib = '/usr/local/lib/
 R -e "remotes::install_github('dreamRs/shinytreeview',    lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('choonghyunryu/koscrap',    lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('bit2r/bitTA',              lib = '/usr/local/lib/R/site-library')"
+R -e "remotes::install_github('bit2r/bitReport',          lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('bit2r/BitStat',            lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('hadley/emo',               lib = '/usr/local/lib/R/site-library')"
