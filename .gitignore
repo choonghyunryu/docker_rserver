@@ -4,3 +4,4 @@
 .Ruserdata
 .DS_Store
 create_container_mine.sh
+.api_key.info
