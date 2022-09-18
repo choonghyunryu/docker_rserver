@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # create docker image
-docker build -t rserver:first ./rstudio-shiny-docker
+docker build --platform linux/amd64 -t rserver:first ./rstudio-shiny-docker

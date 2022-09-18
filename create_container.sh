@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # create docker container
-docker run -d -p 3838:3838 -p 8787:8787 -p 80:80 \
+docker run --platform linux/amd64 -d -p 3838:3838 -p 8787:8787 -p 80:80 \
   -e PASSWORD=rstudio -e ROOT=TRUE \
   --name rstudio-shiny-server \
   -v `pwd`/shiny-server/app:/srv/shiny-server/ \
