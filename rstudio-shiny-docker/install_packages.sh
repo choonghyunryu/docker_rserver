@@ -41,6 +41,8 @@ R -e "install.packages('renv',               lib = '/usr/local/lib/R/site-librar
 R -e "install.packages('flexdashboard',      lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('pkgdown',            lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 R -e "install.packages('xaringanExtra',      lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
+R -e "install.packages('formatR',            lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
+R -e "install.packages('conflicted',         lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
 
 R -e "install.packages('RMeCab',  lib = '/usr/local/lib/R/site-library', repos = 'https://rmecab.jp/R', type = 'source')"
 R -e "install.packages('KoNLP',   lib = '/usr/local/lib/R/site-library', repos = 'https://forkonlp.r-universe.dev', dependencies = TRUE, INSTALL_opts = c('--no-multiarch'))"
