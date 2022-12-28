@@ -37,7 +37,7 @@
     - tex
     - Quarto    
 1. 한글 NLP
-    - bitTA 패키지
+    - bitNLP 패키지
     - 은전한닢 형태소분석기
 1. Web Server
     - Apache 2
