@@ -11,7 +11,7 @@ cd ${INSTALLD}
 wget https://bitbucket.org/eunjeon/mecab-ko/downloads/mecab-0.996-ko-0.9.2.tar.gz 
 tar xzvf mecab-0.996-ko-0.9.2.tar.gz 
 cd ${INSTALLD}/mecab-0.996-ko-0.9.2 
-./configure 
+./configure --build=x86_64-unknown-linux-gnu
 make 
 make install
 ldconfig 
@@ -28,7 +28,7 @@ wget https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.1.1-201
 tar xvfz mecab-ko-dic-2.1.1-20180720.tar.gz 
 cd ${INSTALLD}/mecab-ko-dic-2.1.1-20180720 
 autoreconf 
-./configure
+./configure --build=x86_64-unknown-linux-gnu
 make
 make install
     

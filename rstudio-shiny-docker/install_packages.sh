@@ -2,51 +2,107 @@
 
 set -e
 
-R -e "install.packages('markdown',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('dlookr',             lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('pagedown',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('shinyjs',            lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('shinydashboard',     lib = '/usr/local/lib/R/site-library', epos = 'http://cran.rstudio.com/')"
-R -e "install.packages('shinydashboardPlus', lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('shinyWidgets',       lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('shinybusy',          lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('shinythemes',        lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('shinycssloaders',    lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('colourpicker',       lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('htmltools',          lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('reactable',          lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('glue',               lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('xlsx',               lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('flextable',          lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('googleVis',          lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('plotly',             lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('waffle',             lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('remotes',            lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('ggthemes',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('treemapify',         lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('sparkline',          lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('formattable',        lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('DT',                 lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('XML',                lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('Cairo',              lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('ggridges',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('hash',               lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('tau',                lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('Sejong',             lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('tidytext',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('wordcloud2',         lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('openxlsx',           lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('RcppMeCab',          lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('renv',               lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('flexdashboard',      lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('pkgdown',            lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('xaringanExtra',      lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('formatR',            lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
-R -e "install.packages('conflicted',         lib = '/usr/local/lib/R/site-library', repos = 'http://cran.rstudio.com/')"
+## build ARGs
+NCPUS=${NCPUS:--1}
 
+## related reproducible research
+install2.r --error --skipinstalled -n "$NCPUS" \
+    markdown \
+    pagedown \
+    pkgdown \
+    htmltools \
+    reactable \
+    flextable \
+    formattable \
+    sparkline \
+    DT \
+    xaringanExtra
+    
+## related shiny app
+install2.r --error --skipinstalled -n "$NCPUS" \
+    shinyjs \
+    shinydashboard \
+    shinydashboardPlus \
+    shinyWidgets \
+    shinybusy \
+    shinythemes \
+    shinycssloaders \
+    colourpicker \
+    flexdashboard \
+    xaringanExtra
+    
+## related shiny app
+install2.r --error --skipinstalled -n "$NCPUS" \
+    shinyjs \
+    shinydashboard \
+    shinydashboardPlus \
+    shinyWidgets \
+    shinybusy \
+    shinythemes \
+    shinycssloaders \
+    colourpicker \
+    flexdashboard \
+    xaringanExtra    
+    
+## related text analytics
+install2.r --error --skipinstalled -n "$NCPUS" \
+    tidytext \
+    text2vec \
+    wordcloud2 \
+    tau \
+    RcppMeCab \
+    tm \
+    arules \
+    arulesViz \
+    ggraph \
+    igraph \
+    tidygraph \
+    quanteda \
+    quanteda.textplots \
+    NbClust \
+    topicmodels
+    
+## related data analytics
+install2.r --error --skipinstalled -n "$NCPUS" \
+    dlookr \
+    alookr \
+    tidymodels \
+    glmnet \
+    caret \
+    Boruta \
+    GGally \
+    rpart \
+    rpart.plot \
+    pROC \
+    palmerpenguins \
+    parallel \
+    doParallel
+
+## misc
+install2.r --error --skipinstalled -n "$NCPUS" \
+    glue \
+    here \
+    xlsx \
+    openxlsx \
+    XML \
+    googleVis \
+    plotly \
+    waffle \
+    ggthemes \
+    treemapify \
+    Cairo \
+    ggridges \
+    hash \
+    renv \
+    formatR \
+    remotes \
+    conflicted
+
+## install from github repository
+R -e "remotes::install_github('kassambara/factoextra',    lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('dreamRs/shinytreeview',    lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('choonghyunryu/koscrap',    lib = '/usr/local/lib/R/site-library')"
-R -e "remotes::install_github('bit2r/bitTA',              lib = '/usr/local/lib/R/site-library')"
+R -e "remotes::install_github('bit2r/bitNLP',             lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('bit2r/bitReport',          lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('bit2r/BitStat',            lib = '/usr/local/lib/R/site-library')"
 R -e "remotes::install_github('hadley/emo',               lib = '/usr/local/lib/R/site-library')"
