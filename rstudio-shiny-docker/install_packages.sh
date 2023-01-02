@@ -31,26 +31,13 @@ install2.r --error --skipinstalled -n "$NCPUS" \
     flexdashboard \
     xaringanExtra
     
-## related shiny app
-install2.r --error --skipinstalled -n "$NCPUS" \
-    shinyjs \
-    shinydashboard \
-    shinydashboardPlus \
-    shinyWidgets \
-    shinybusy \
-    shinythemes \
-    shinycssloaders \
-    colourpicker \
-    flexdashboard \
-    xaringanExtra    
-    
 ## related text analytics
+apt-get install -y gsl-bin libgsl0-dev
 install2.r --error --skipinstalled -n "$NCPUS" \
     tidytext \
     text2vec \
     wordcloud2 \
     tau \
-    RcppMeCab \
     tm \
     arules \
     arulesViz \

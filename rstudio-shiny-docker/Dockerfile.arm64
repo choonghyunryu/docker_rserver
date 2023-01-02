@@ -1,4 +1,4 @@
-FROM rocker/rstudio:latest-daily
+FROM rocker/rstudio:4.2.2
 
 MAINTAINER Choonghyun Ryu <"choonghyun.ryu@gmail.com">
 
@@ -13,9 +13,7 @@ RUN /usr/local/bin/install_tidyverse.sh
 # Install tinytex and tools/packages related to publishing
 ENV CTAN_REPO=https://mirror.ctan.org/systems/texlive/tlnet
 ENV PATH=$PATH:/usr/local/texlive/bin/linux
-ENV QUARTO_VERSION=latest
 RUN /rocker_scripts/install_verse.sh
-RUN /rocker_scripts/install_quarto.sh
 
 # Install system libraries of general use
 RUN apt-get update && apt-get install -y \
@@ -64,11 +62,10 @@ RUN chmod +x /usr/local/bin/install_dsub_deamon.sh
 RUN /usr/local/bin/install_dsub_deamon.sh
 
 # Install google chrome for pagedown package 
-RUN curl -L http://bit.ly/google-chrome-stable -o google-chrome-stable.deb && \
-    apt-get -y install ./google-chrome-stable.deb && \
-    rm google-chrome-stable.deb
+RUN apt-get update && apt-get install -y \
+    chromium-browser
 
-COPY google-chrome /usr/local/bin/
+#COPY google-chrome /usr/local/bin/
 
 # Create user for R analytics
 COPY create_user.sh /usr/local/bin/
