@@ -4,8 +4,8 @@ MAINTAINER Choonghyun Ryu <"choonghyun.ryu@gmail.com">
 
 # Install shiny server
 #RUN /rocker_scripts/install_shiny_server.sh
+
 # Install tidyverse packages
-#RUN /rocker_scripts/install_tidyverse.sh
 COPY install_tidyverse.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_tidyverse.sh
 RUN /usr/local/bin/install_tidyverse.sh

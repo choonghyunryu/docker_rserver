@@ -10,9 +10,8 @@ RUN /rocker_scripts/install_tidyverse.sh
 # Install tinytex and tools/packages related to publishing
 ENV CTAN_REPO=https://mirror.ctan.org/systems/texlive/tlnet
 ENV PATH=$PATH:/usr/local/texlive/bin/linux
-#ENV QUARTO_VERSION=latest
 RUN /rocker_scripts/install_verse.sh
-#RUN /rocker_scripts/install_quarto.sh
+
 
 # Install system libraries of general use
 RUN apt-get update && apt-get install -y \
