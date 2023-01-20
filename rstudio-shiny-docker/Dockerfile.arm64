@@ -1,85 +1,198 @@
-FROM rocker/rstudio:4.2.2
+#-------------------------------------------------------------------------------
+# Install rstudio sverver
+#-------------------------------------------------------------------------------
+FROM rocker/rstudio:latest-daily
 
 MAINTAINER Choonghyun Ryu <"choonghyun.ryu@gmail.com">
 
-# Install shiny server
-#RUN /rocker_scripts/install_shiny_server.sh
+ENV S6_VERSION=v2.1.0.2
+ENV RSTUDIO_VERSION=daily
+ENV DEFAULT_USER=rstudio
+ENV PANDOC_VERSION=default
+ENV PATH=/usr/lib/rstudio-server/bin:$PATH
 
+#-------------------------------------------------------------------------------
 # Install tidyverse packages
+#-------------------------------------------------------------------------------
 COPY install_tidyverse.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_tidyverse.sh
 RUN /usr/local/bin/install_tidyverse.sh
 
+#-------------------------------------------------------------------------------
 # Install tinytex and tools/packages related to publishing
+#-------------------------------------------------------------------------------
 ENV CTAN_REPO=https://mirror.ctan.org/systems/texlive/tlnet
 ENV PATH=$PATH:/usr/local/texlive/bin/linux
 RUN /rocker_scripts/install_verse.sh
 
+#-------------------------------------------------------------------------------
 # Install system libraries of general use
+#-------------------------------------------------------------------------------
 RUN apt-get update && apt-get install -y \
     openjdk-11-jdk \
     htop \
-    readline-common
+    readline-common \
+    xz-utils
 
+#-------------------------------------------------------------------------------
 # Install the Korean language pack
+#-------------------------------------------------------------------------------
 RUN apt-get install -y language-pack-ko && \
     locale-gen ko_KR.UTF-8
 
+#-------------------------------------------------------------------------------
 # Install the Korean fonts
+#-------------------------------------------------------------------------------
 RUN apt-get install -y fonts-nanum* fonts-noto-cjk && \
     fc-cache -fv
 
+#-------------------------------------------------------------------------------
 # Create a directory to store the files to be installed
+#-------------------------------------------------------------------------------
 RUN mkdir /usr/local/install_resources
 COPY NIADic/*.csv /usr/local/install_resources/
 
+#-------------------------------------------------------------------------------
 # Install the Korean morpheme analyzer
-COPY install_morphology.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/install_morphology.sh
-RUN /usr/local/bin/install_morphology.sh
+#-------------------------------------------------------------------------------
+COPY install_morphology.arm64.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/install_morphology.arm64.sh
+RUN /usr/local/bin/install_morphology.arm64.sh
 
 # Set R environment variables
 COPY Renviron /.Renviron
 
+#-------------------------------------------------------------------------------
 # Install web server
+#-------------------------------------------------------------------------------
 COPY install_nginx.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_nginx.sh
 RUN /usr/local/bin/install_nginx.sh
 
+#-------------------------------------------------------------------------------
 # Install additional tex packages
+#-------------------------------------------------------------------------------
 COPY install_tex_packages.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_tex_packages.sh
 RUN /usr/local/bin/install_tex_packages.sh
 
+#-------------------------------------------------------------------------------
 # Install R packages
+#-------------------------------------------------------------------------------
 COPY install_packages.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_packages.sh
 RUN /usr/local/bin/install_packages.sh
 
+#-------------------------------------------------------------------------------
 # Install dsub deamon
+#-------------------------------------------------------------------------------
 COPY install_dsub_deamon.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/install_dsub_deamon.sh
 RUN /usr/local/bin/install_dsub_deamon.sh
 
+#-------------------------------------------------------------------------------
 # Install google chrome for pagedown package 
-RUN apt-get update && apt-get install -y \
+#-------------------------------------------------------------------------------
+RUN apt-get install -y \
     chromium-browser
 
 #COPY google-chrome /usr/local/bin/
 
+#-------------------------------------------------------------------------------
+# Install shiny server
+#-------------------------------------------------------------------------------
+ENV V_ShinyServer=v1.5.20.1002
+
+# Set python3 as the default python
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Install shiny-server with fix for arm architectures
+WORKDIR /
+RUN git clone --depth 1 --branch ${V_ShinyServer} https://github.com/rstudio/shiny-server.git && \
+    mkdir shiny-server/tmp
+COPY binding.gyp /shiny-server/tmp/binding.gyp
+
+#Automagically determine arch and replace it in hash values and links
+COPY determine_arch.sh /determine_arch.sh
+RUN chmod +x determine_arch.sh && \
+    ./determine_arch.sh
+
+WORKDIR /shiny-server/tmp/
+
+# Install node for rshiny. Currently only --unsafe-perm works (see https://github.com/npm/npm/issues/3497) 
+RUN PYTHON=`which python` && \
+    mkdir ../build && \
+    cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DPYTHON="$PYTHON" ../ && \
+    make -j4 && \
+    ../external/node/install-node.sh && \
+    PATH=$PATH:/shiny-server/ext/node/bin/ && \
+    ../bin/node ../ext/node/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js configure && \
+    ../bin/node ../ext/node/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js --python="$PYTHON" rebuild && \
+    ../bin/npm --python="${PYTHON}" install --no-optional && \
+    ../bin/npm --python="${PYTHON}" install --no-optional --unsafe-perm && \
+    ../bin/npm --python="${PYTHON}" rebuild && \
+    make -j4 install
+    
+WORKDIR /
+RUN useradd -r -m shiny
+RUN ln -s /usr/local/shiny-server/bin/shiny-server /usr/bin/shiny-server
+
+#Create folder structure and set permissions
+RUN mkdir -p        /var/log/shiny-server && \
+    chown shiny     /var/log/shiny-server && \
+    chmod -R 777    /var/log/shiny-server && \
+    mkdir -p        /srv/shiny-server     && \
+    chmod -R 777    /srv/shiny-server     && \
+    mkdir -p        /var/lib/shiny-server && \
+    chmod -R 777    /var/lib/shiny-server && \
+    mkdir -p        /etc/shiny-server     && \
+    chmod -R 777    /srv/shiny-server
+
+#Shiny server configuration
+COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
+
+#Init file for installing R-packages from host
+COPY init.sh /etc/shiny-server/init.sh
+RUN chmod 777 /etc/shiny-server/init.sh
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gfortran libreadline6-dev libcurl4-openssl-dev ca-certificates \
+    libcairo2-dev xvfb libxt-dev \
+    libjpeg-dev libbz2-dev libzstd-dev libatomic1 \
+    libgomp1 libpcre2-8-0  && \
+    rm -rf /var/lib/apt/lists/*
+
+#Preload hello world project
+COPY hello/* /srv/shiny-server/hello/
+
+ENTRYPOINT ["/etc/shiny-server/init.sh"]
+
+#-------------------------------------------------------------------------------
 # Create user for R analytics
+#-------------------------------------------------------------------------------
 COPY create_user.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/create_user.sh
 RUN /usr/local/bin/create_user.sh
 
-# For servers (rstudio, shiny, web)
-EXPOSE 8787 
-#EXPOSE 3838 
-EXPOSE 80
+COPY .bash* /home/ruser/
+COPY .bash* /root
 
 # For Environments
 ENV LANG en_US.UTF-8
 ENV TZ Asia/Seoul
 
+#-------------------------------------------------------------------------------
+# For server deamons
+#-------------------------------------------------------------------------------
+COPY run_server.sh /etc/rstudio/init.sh
+RUN chmod 777 /etc/rstudio/init.sh
+RUN /etc/rstudio/init.sh
+
+# For servers (rstudio, shiny, web)
+EXPOSE 8787 
+EXPOSE 3838 
+EXPOSE 80
+
 # Excute server deamons
-CMD ["/init"]
+#CMD ["/init"]
+CMD ["exec bash"]
