@@ -63,7 +63,8 @@ install2.r --error --skipinstalled -n "$NCPUS" \
     pROC \
     palmerpenguins \
     parallel \
-    doParallel
+    doParallel \
+    RcppMeCab
 
 ## misc
 install2.r --error --skipinstalled -n "$NCPUS" \
